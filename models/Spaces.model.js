@@ -19,8 +19,8 @@ const spacesSchema = new Schema(
         },
         imageUrl: String,
         website: String,
-        extras: String,
-        petFriendly: Boolean       
+        petFriendly: Boolean,      
+        extras: String
     
     }
 );
