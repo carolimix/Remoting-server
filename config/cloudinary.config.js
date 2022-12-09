@@ -1,5 +1,5 @@
-const cloudinary = requir("cloudinary").v2;
-const { CludinaryStorage, CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary").v1_1;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = requiere("multer");
 
 cloudinary.config( {
@@ -11,7 +11,7 @@ cloudinary.config( {
 const storage = new CloudinaryStorage({
     cloudinary,
     params: {
-        allowed_formats: ["jpg", "png"],
+        allowed_formats: ["jpg", "png", "gif"],
         folder: "remoting",
         resource_type: "raw",
     }

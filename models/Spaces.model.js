@@ -20,7 +20,8 @@ const spacesSchema = new Schema(
         imageUrl: String,
         website: String,
         petFriendly: Boolean,      
-        extras: String
+        extras: String,
+        added_by: [ { type: Schema.Types.ObjectId, ref: "User" } ]
     
     }
 );
