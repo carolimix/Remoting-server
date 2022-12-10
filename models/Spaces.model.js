@@ -21,8 +21,7 @@ const spacesSchema = new Schema(
         website: String,
         petFriendly: Boolean,      
         extras: String,
-        added_by: [ { type: Schema.Types.ObjectId, ref: "User" } ]
-    
+        added_by: String,    
     }
 );
 

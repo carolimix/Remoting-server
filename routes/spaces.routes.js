@@ -1,26 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-
+const fileUploader = require("../config/cloudinary.config");
 const Spaces = require("../models/Spaces.model");
 
 //POST /spaces/create - Creates a new Space
 router.post("/spaces/create", (req, res, next) => {
     const {name, district, description, type, priceRange, openingTimes, imageUrl, website, petFriendly, extras } = req.body;
 
-    Spaces.create({
-        name,
-        district, 
-        description, 
-        type, 
-        priceRange, 
-        openingTimes, 
-        imageUrl, 
-        website, 
-        petFriendly, 
-        extras
-    })
-    .then((response) => res.json(repsonse))
+    Spaces.create(req.body)
+    .then((response) => res.json(response))
     .catch((err) => res.json(err));
 });
 
@@ -41,6 +30,16 @@ router.get("/spaces/:spaceId", (req, res, next) => {
     }
 })
 
+//Image upload route
+router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
+   
+    if (!req.file) {
+      next(new Error("No file uploaded!"));
+      return;
+    }  res.json({ secure_url: req.file.path });
+  });
+
+
 //PUT /spaces/:spaceId - Update a specific project by id
 router.put("/spaces/:spaceId", (req, res, next) => {
     const { spaceId} = req.params;
@@ -53,6 +52,21 @@ router.put("/spaces/:spaceId", (req, res, next) => {
     .then((updatedSpace) => res.json(updatedSpace))
     .catch((error) => res.json(error));
 });
+
+//add like
+
+router.put("/:spaceId/addlike", (req, res, next) => {
+ const [...likes] = req.body
+ console.log(likes)
+ 
+ Spaces.findByIdAndUpdate(req.params.spaceId, {
+    likes
+ })
+ .then(project => {
+    res.json(project)
+ })
+ .catch((error) => res.json(error))
+})
 
 //DELETE /spaces/:spaceId - Deletes a specific space by id
 router.delete("/spaces/:spaceId", ( req, res, next) => {
