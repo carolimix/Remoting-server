@@ -5,23 +5,17 @@ const spacesSchema = new Schema(
         name: String,
         district: String,
         description: String,
-        type: {
-            public: {type: Boolean, required: true, default: true},
-            private: {type: Boolean, required: true, default: true}
-        },
-        priceRange: {
-            enum: ["$", "$$", "$$$"]
-                 },
-        openingTimes: { 
-            days: [],
-            open: String, 
-            close: String,
-        },
+        type: String,
+        priceRange: String,
+        openingTimes: String,
         imageUrl: String,
         website: String,
-        petFriendly: Boolean,      
+        petFriendly: String,      
         extras: String,
         added_by: String,    
+    },
+    {
+    timestamps: true,
     }
 );
 

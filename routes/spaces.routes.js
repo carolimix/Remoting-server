@@ -20,6 +20,16 @@ router.get("/spaces", (req, res, next) => {
     .catch((err) => res.json(err));
 });
 
+
+//Image upload route
+router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
+   
+    if (!req.file) {
+      next(new Error("No file uploaded!"));
+      return;
+    }  res.json({ secure_url: req.file.path });
+  });
+
 //GET /spaces/:spaceId - Retrieves a specific space by id
 router.get("/spaces/:spaceId", (req, res, next) => {
     const { spaceId } = req.params;
@@ -30,14 +40,6 @@ router.get("/spaces/:spaceId", (req, res, next) => {
     }
 })
 
-//Image upload route
-router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
-   
-    if (!req.file) {
-      next(new Error("No file uploaded!"));
-      return;
-    }  res.json({ secure_url: req.file.path });
-  });
 
 
 //PUT /spaces/:spaceId - Update a specific project by id

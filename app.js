@@ -17,11 +17,8 @@ app.use("/auth", authRoutes);
 const spacesRoutes = require("./routes/spaces.routes");
 app.use("/", spacesRoutes);
 
-const path = require('path');
-app.use(express.static(path.join(__dirname, "/client/dist")));
-
 app.use((req, res) => {
-  res.sendFile(__dirname + "/client/dist/index.html");
+  res.sendFile(__dirname + "./client/public/index.html");
 });
 
 require("./error-handling")(app);

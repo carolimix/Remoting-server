@@ -1,26 +1,18 @@
 const express = require("express");
 const router = express.Router();
-
-// ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
-
-// ℹ️ Handles password encryption
 const jwt = require("jsonwebtoken");
 
-// Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
-// Require necessary (isAuthenticated) middleware in order to control access to specific routes
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 
-// How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
   const { email, password, name } = req.body;
 
-  // Check if email or password or name are provided as empty strings
   if (email === "" || password === "" || name === "") {
     res.status(400).json({ message: "Provide email, password and name" });
     return;
@@ -43,16 +35,13 @@ router.post("/signup", (req, res, next) => {
     return;
   }
 
-  // Check the users collection if a user with the same email already exists
   User.findOne({ email })
     .then((foundUser) => {
-      // If the user with the same email already exists, send an error response
       if (foundUser) {
         res.status(400).json({ message: "User already exists." });
         return;
       }
 
-      // If email is unique, proceed to hash the password
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
 
