@@ -38,9 +38,13 @@ router.get("/spaces/:spaceId", (req, res, next) => {
         res.status(400).json({ message: "Specified id is not valid"});
         return;
     }
+
+    Spaces.findById(spaceId)
+    .then(space => {
+        res.status(200).json(space)
+    })
+    .catch(err => next(err))
 })
-
-
 
 //PUT /spaces/:spaceId - Update a specific project by id
 router.put("/spaces/:spaceId", (req, res, next) => {
