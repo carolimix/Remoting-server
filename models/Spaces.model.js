@@ -12,7 +12,9 @@ const spacesSchema = new Schema(
         website: String,
         petFriendly: String,      
         extras: String,
-        added_by: String,    
+        added_by: String,
+        likes: Array, 
+
     },
     {
     timestamps: true,

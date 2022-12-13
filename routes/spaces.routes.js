@@ -69,6 +69,7 @@ router.put("/:spaceId/addlike", (req, res, next) => {
     likes
  })
  .then(project => {
+    console.log("ok")
     res.json(project)
  })
  .catch((error) => res.json(error))
