@@ -59,6 +59,7 @@ router.get("/spaces/:spaceId", (req, res, next) => {
 //PUT /spaces/:spaceId - Update a specific project by id
 router.put("/spaces/:spaceId", (req, res, next) => {
   const { spaceId } = req.params;
+  console.log(req.body)
   if (!mongoose.Types.ObjectId.isValid(spaceId)) {
     res.status(400).json({ message: "Specified is not valid" });
     return;
