@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const fileUploader = require("../config/cloudinary.config");
 const Spaces = require("../models/Spaces.model");
+const User = require("../models/User.model");
 
 //POST /spaces/create - Creates a new Space
 router.post("/spaces/create", (req, res, next) => {
@@ -23,6 +24,22 @@ router.post("/spaces/create", (req, res, next) => {
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
 });
+
+router.post("/addfavorite", async (req, res, next) => {
+  if (!req.body) {
+    next(new Error("No favorite added!"));
+    return;
+  }
+  const { user, spaceId } = req.body; 
+  try {
+    const updatedUser = await User.findById(user._id);
+    updatedUser.likedSpaces.push(spaceId);
+    await updatedUser.save();
+    res.json(updatedUser);
+   }
+  catch(error) {console.log(error)}
+});
+
 
 //GET spaces - Retreives all of the spaces
 router.get("/spaces", (req, res, next) => {
@@ -59,7 +76,7 @@ router.get("/spaces/:spaceId", (req, res, next) => {
 //PUT /spaces/:spaceId - Update a specific project by id
 router.put("/spaces/:spaceId", (req, res, next) => {
   const { spaceId } = req.params;
-  console.log(req.body)
+  console.log(req.body);
   if (!mongoose.Types.ObjectId.isValid(spaceId)) {
     res.status(400).json({ message: "Specified is not valid" });
     return;
@@ -77,10 +94,10 @@ router.put("/:spaceId/addlike", async (req, res, next) => {
   console.log(username);
   console.log(req.params.spaceId);
   try {
-    const likedSpace = await Spaces.findByIdAndUpdate(req.params.spaceId)
-    likedSpace.likes.push(username)
-    await likedSpace.save()
-    res.json(likedSpace)
+    const likedSpace = await Spaces.findByIdAndUpdate(req.params.spaceId);
+    likedSpace.likes.push(username);
+    await likedSpace.save();
+    res.json(likedSpace);
   } catch (error) {
     console.log(error);
   }
@@ -107,5 +124,17 @@ router.delete("/spaces/:spaceId", (req, res, next) => {
     )
     .catch((error) => res.json(error));
 });
+
+router.get("/user/:userId", (req, res, next) => {
+const { userId } = req.params;
+ User.findById(userId)
+ .populate("likedSpaces")
+ .then((userReturnedFromDB) => {
+  console.log(userReturnedFromDB)
+  res.status(200).json(userReturnedFromDB);
+})
+.catch((err) => next(err));
+})
+
 
 module.exports = router;
