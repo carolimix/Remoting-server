@@ -47,8 +47,9 @@ Thank you for considering contributing! To contribute to this project, follow th
 3. Make your changes and commit: `git commit -m 'Add new feature'`
 4. Submit a pull request.
 
+## License
 
-
+This project is licensed under the [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
