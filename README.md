@@ -47,9 +47,7 @@ Thank you for considering contributing! To contribute to this project, follow th
 3. Make your changes and commit: `git commit -m 'Add new feature'`
 4. Submit a pull request.
 
-## License
 
-Este proyecto está protegido por derechos de autor y es mantenido por [Carolina Acuña]. No se concede ninguna licencia para la reproducción, distribución o creación de trabajos derivados a menos que se otorgue expresamente una licencia por escrito por parte de [Carolina Acuña].
 
 
 ## Contact
@@ -58,7 +56,10 @@ For questions or discussions, please contact [Carolina Acuña](mailto:carolina.a
 
 ---
 
-**Visit the [deployed Remoting application](https://remoting.netlify.app/)**
+
+## Frontend Code
+
+The frontend code for this project is available [here](https://github.com/carolimix/Remoting-client).
 
 
 
